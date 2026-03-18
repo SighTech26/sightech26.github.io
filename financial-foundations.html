@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #2e7d52;
+    --green-light: #e8f4ee;
+    --text: #111;
+    --text-soft: #555;
+    --border: #e5e5e5;
+    --bg: #fff;
+    --bg-soft: #f7f7f7;
+    --radius: 10px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+.center-it {
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 56px;
+  }
+  .nav-brand {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-brand span {
+    display: inline-block;
+    width: 22px; height: 22px;
+    background: var(--green);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+  }
+  .nav-links button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-soft);
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-links button:hover { background: var(--bg-soft); color: var(--text); }
+  .nav-links button.active { background: var(--green-light); color: var(--green); }
+
+  /* hamburger */
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 20px; height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: 0.2s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 56px; left: 0; right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    z-index: 99;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu button {
+    background: none; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    font-weight: 500; color: var(--text-soft);
+    padding: 10px 12px; border-radius: 6px;
+    text-align: left; transition: background 0.15s, color 0.15s;
+  }
+  .mobile-menu button:hover { background: var(--bg-soft); color: var(--text); }
+  .mobile-menu button.active { background: var(--green-light); color: var(--green); }
+
+  /* ── PANELS ── */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 64px 32px 56px;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .hero p {
+    font-size: 16px;
+    color: var(--text-soft);
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── PAGE HEADING ── */
+  .page-head {
+    padding: 48px 32px 0;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .page-head .tag {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--green); display: block; margin-bottom: 10px;
+  }
+  .page-head h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 600; letter-spacing: -0.025em;
+    color: var(--text); margin-bottom: 10px;
+  }
+  .page-head p {
+    color: var(--text-soft); font-weight: 300;
+    max-width: 560px; line-height: 1.7; font-size: 15px;
+  }
+
+  /* ── MAIN CONTENT WRAPPER ── */
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 36px 32px 80px;
+  }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--bg-soft);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .callout strong { font-weight: 600; color: var(--text); }
+  .callout p { font-size: 14px; line-height: 1.75; color: var(--text-soft); }
+  .callout p + p { margin-top: 8px; }
+
+  /* ── STAT GRID ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 18px;
+  }
+  .stat-card .num {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card .label { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .stat-card .desc { font-size: 12px; color: var(--text-soft); line-height: 1.5; }
+
+  /* ── MODULE CARDS ── */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .module-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 18px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .module-card:hover { border-color: var(--green); box-shadow: 0 2px 12px rgba(46,125,82,0.08); }
+  .module-card .icon { font-size: 1.2rem; margin-bottom: 10px; }
+  .module-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .module-card p { font-size: 12px; color: var(--text-soft); line-height: 1.5; }
+  .module-card .go { font-size: 12px; color: var(--green); font-weight: 500; margin-top: 10px; display: block; }
+
+  /* ── HOW LIST ── */
+  .how-list { display: flex; flex-direction: column; gap: 12px; }
+  .how-item { display: flex; gap: 12px; align-items: flex-start; }
+  .how-n {
+    min-width: 22px; height: 22px;
+    background: var(--text); color: #fff;
+    border-radius: 50%; font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px; flex-shrink: 0;
+  }
+  .how-item p { font-size: 14px; color: var(--text-soft); line-height: 1.6; }
+  .how-item p strong { color: var(--text); font-weight: 500; }
+
+  /* ── SECTION TITLE ── */
+  .sec-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── WIDGET ── */
+  .widget {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    margin-bottom: 28px;
+  }
+  .widget h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .widget .sub { font-size: 13px; color: var(--text-soft); margin-bottom: 22px; }
+
+  /* fields */
+  .fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .field label { display: block; font-size: 11px; font-weight: 500; color: var(--text-soft); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .field input, .field select {
+    width: 100%; font-family: 'Inter', sans-serif; font-size: 14px;
+    color: var(--text); background: var(--bg-soft);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 9px 12px; outline: none; transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus { border-color: var(--green); background: #fff; }
+
+  /* sliders */
+  .slider-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px; }
+  .slider-row { display: grid; grid-template-columns: 90px 1fr 44px; gap: 12px; align-items: center; }
+  .slider-row label { font-size: 13px; font-weight: 500; color: var(--text); }
+  input[type=range] {
+    -webkit-appearance: none; width: 100%; height: 4px;
+    background: var(--border); border-radius: 99px; outline: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px;
+    border-radius: 50%; background: var(--green); cursor: pointer;
+    box-shadow: 0 1px 4px rgba(46,125,82,0.3);
+  }
+  .pct-val { font-size: 13px; font-weight: 600; color: var(--green); text-align: right; }
+
+  /* result tiles */
+  .result-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .rtile { border-radius: 8px; padding: 14px 12px; text-align: center; }
+  .rtile.needs { background: #edf7f1; }
+  .rtile.wants { background: #fef9ec; }
+  .rtile.savings { background: #eef4fb; }
+  .rtile .rcat { font-size: 11px; font-weight: 500; color: var(--text-soft); margin-bottom: 4px; }
+  .rtile .ramt { font-size: 1.3rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
+  .rtile .rpct { font-size: 11px; color: var(--text-soft); margin-top: 2px; }
+
+  .warn { background: #fffbec; border: 1px solid #e5d060; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #6b5200; margin-top: 12px; display: none; }
+
+  /* CI results */
+  .ci-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+  .ctile { background: var(--bg-soft); border-radius: 8px; padding: 14px 12px; text-align: center; }
+  .ctile .clabel { font-size: 11px; font-weight: 500; color: var(--text-soft); margin-bottom: 4px; }
+  .ctile .cval { font-size: 1.1rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
+  .ctile.big .cval { font-size: 1.4rem; color: var(--green); }
+
+  /* bar chart */
+  .chart { background: var(--bg-soft); border-radius: 8px; padding: 16px 12px 8px; overflow-x: auto; }
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 120px; min-width: 300px; }
+  .bcol { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
+  .b-i { width: 100%; background: var(--green); border-radius: 3px 3px 0 0; transition: height 0.4s ease; }
+  .b-p { width: 100%; background: #b2d8c4; transition: height 0.4s ease; }
+  .b-yr { font-size: 10px; color: var(--text-soft); margin-top: 4px; }
+  .clegend { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
+  .cleg { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-soft); }
+  .ldot { width: 10px; height: 10px; border-radius: 2px; }
+
+  /* goal output */
+  .goal-out { background: var(--bg-soft); border-radius: 8px; padding: 16px 18px; }
+  .goal-out .gomain { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .goal-out .godetail { font-size: 13px; color: var(--text-soft); line-height: 1.6; }
+  .prog-wrap { margin-top: 12px; }
+  .prog-label { font-size: 11px; color: var(--text-soft); margin-bottom: 5px; }
+  .prog-outer { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .prog-inner { height: 100%; background: var(--green); border-radius: 99px; transition: width 0.4s ease; }
+
+  /* prose */
+  .prose { font-size: 14px; color: var(--text-soft); line-height: 1.75; }
+  .prose p { margin-bottom: 14px; }
+  .prose p strong { color: var(--text); font-weight: 500; }
+  .prose h3 { font-size: 14px; font-weight: 600; color: var(--text); margin: 24px 0 8px; }
+
+  /* ── QUIZ ── */
+  .qwrap { max-width: 580px; }
+  .qprog-outer { height: 3px; background: var(--border); border-radius: 99px; margin-bottom: 28px; overflow: hidden; }
+  .qprog-inner { height: 100%; background: var(--green); border-radius: 99px; transition: width 0.3s ease; }
+  .qcard { border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+  .qnum { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 10px; }
+  .qtext { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.5; margin-bottom: 20px; }
+  .qopts { display: flex; flex-direction: column; gap: 8px; }
+  .qopt {
+    background: var(--bg-soft); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 16px; font-family: 'Inter', sans-serif;
+    font-size: 13px; color: var(--text); text-align: left; cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    line-height: 1.4;
+  }
+  .qopt:hover:not(:disabled) { background: var(--green-light); border-color: var(--green); transform: translateX(3px); }
+  .qopt.correct { background: #eaf5ef; border-color: var(--green); }
+  .qopt.incorrect { background: #faeaea; border-color: #d06060; color: #5a1a1a; }
+  .qfb { margin-top: 16px; padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; display: none; }
+  .qfb.correct { background: #eaf5ef; color: #1a4a2e; border-left: 3px solid var(--green); display: block; }
+  .qfb.incorrect { background: #faeaea; color: #5a1a1a; border-left: 3px solid #d06060; display: block; }
+  .qnext {
+    background: var(--text); color: #fff; border: none; border-radius: 8px;
+    padding: 10px 22px; font-family: 'Inter', sans-serif; font-size: 13px;
+    font-weight: 500; cursor: pointer; margin-top: 16px; display: none;
+    transition: background 0.15s;
+  }
+  .qnext:hover { background: var(--green); }
+  .qresult { border: 1px solid var(--border); border-radius: var(--radius); padding: 48px 28px; text-align: center; display: none; }
+  .qresult .bigscore { font-size: 3.5rem; font-weight: 600; color: var(--green); letter-spacing: -0.04em; line-height: 1; margin-bottom: 4px; }
+  .qresult .scorelabel { font-size: 13px; color: var(--text-soft); margin-bottom: 16px; }
+  .qresult p { font-size: 14px; color: var(--text-soft); max-width: 380px; margin: 0 auto 24px; line-height: 1.65; }
+  .btn-restart { background: var(--text); color: #fff; border: none; border-radius: 8px; padding: 10px 24px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+  .btn-restart:hover { background: var(--green); }
+
+  /* footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 32px;
+    font-size: 12px;
+    color: var(--text-soft);
+    text-align: center;
+  }
+  footer a { color: var(--text-soft); }
+
+  /* responsive */
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero { padding: 44px 20px 36px; }
+    .page-head { padding: 36px 20px 0; }
+    .content { padding: 28px 20px 60px; }
+    .stat-grid, .module-grid { grid-template-columns: 1fr; }
+    .result-tiles, .ci-tiles { grid-template-columns: 1fr; }
+    .slider-row { grid-template-columns: 80px 1fr 36px; gap: 8px; }
+    footer { padding: 16px 20px; }
+  }
+
+  /* ── HERO BACKGROUND ── */
+.hero-bg {
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    #f3faf6 0%,
+    #eef7f2 100%
+  );
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+/* decorative soft gradient blob */
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  left: -160px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(
+    circle,
+    rgba(46,125,82,0.08) 0%,
+    rgba(46,125,82,0.04) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* subtle second blob */
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  bottom: -140px;
+  right: -160px;
+  width: 460px;
+  height: 460px;
+  background: radial-gradient(
+    circle,
+    rgba(46,125,82,0.06) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* adjust hero spacing */
+.hero {
+  padding: 80px 32px 72px;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <span>💰</span>
+    Financial Foundations
+  </div>
+  <ul class="nav-links">
+    <li><button class="active" data-p="overview">Overview</button></li>
+    <li><button data-p="budgeting">Budgeting</button></li>
+    <li><button data-p="compound">Compound Interest</button></li>
+    <li><button data-p="savings">Savings Goals</button></li>
+    <li><button data-p="quiz">Quiz</button></li>
+  </ul>
+  <button class="hamburger" id="hbg" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mmenu">
+  <button class="active" data-pm="overview">Overview</button>
+  <button data-pm="budgeting">Budgeting</button>
+  <button data-pm="compound">Compound Interest</button>
+  <button data-pm="savings">Savings Goals</button>
+  <button data-pm="quiz">Quiz</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="panel active" id="panel-overview">
+<!-- HERO -->
+<section class="hero-bg">
+  <div class="hero">
+    <span class="tag">Open Educational Resource</span>
+    <h1>Financial Foundations for Beginners</h1>
+    <p>
+      A practical toolkit to help high school students understand budgeting,
+      compound interest, and savings.
+      
+    </p>
+  </div>
+</section>
+  <div class="content">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="num">×15</div>
+        <div class="label">Power of saving early</div>
+        <div class="desc">$1 saved at 16 at 7% return becomes ~$15 by age 65 with no extra effort.</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">50%</div>
+        <div class="label">Teens with no savings plan</div>
+        <div class="desc">Most young earners don't have a strategy for their money. This toolkit changes that.</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">3</div>
+        <div class="label">Core topics inside</div>
+        <div class="desc">Budgeting, compound interest, and savings goals — the essentials of financial literacy.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="center-it"> <strong class="center-it">Why does this matter now?<br></strong> The habits you build in your teens have an outsized impact on your financial future. You don't need a lot of money to start: you just need a plan. Even $20/month saved at 16 can grow to over $7,000 by age 30.</p>
+    </div>
+
+    <div class="sec-title">What's inside</div>
+    <div class="module-grid">
+      <div class="module-card" onclick="go('budgeting')">
+        <div class="icon">📊</div>
+        <h3>Budgeting</h3>
+        <p>Learn the 50/30/20 rule and use the interactive calculator with your own income.</p>
+        <span class="go">Open →</span>
+      </div>
+      <div class="module-card" onclick="go('compound')">
+        <div class="icon">📈</div>
+        <h3>Compound Interest</h3>
+        <p>See how savings grow over time and why starting even one year earlier matters.</p>
+        <span class="go">Open →</span>
+      </div>
+      <div class="module-card" onclick="go('savings')">
+        <div class="icon">🎯</div>
+        <h3>Savings Goals</h3>
+        <p>Set a real target and calculate exactly how much to save each month to hit it.</p>
+        <span class="go">Open →</span>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:32px;">How to use this</div>
+    <div class="how-list">
+      <div class="how-item"><div class="how-n">1</div><p>Navigate the tabs in <strong>any order</strong> — go wherever your curiosity takes you.</p></div>
+      <div class="how-item"><div class="how-n">2</div><p><strong>Enter your own numbers</strong> in every interactive tool to make it personal.</p></div>
+      <div class="how-item"><div class="how-n">3</div><p>Take the <strong>quiz</strong> at any point to check your understanding and get instant feedback.</p></div>
+      <div class="how-item"><div class="how-n">4</div><p>Come back anytime — this resource is <strong>free and open</strong> for you to keep.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- BUDGETING -->
+<div class="panel" id="panel-budgeting">
+  <div class="page-head">
+    <span class="tag">Module 1</span>
+    <h2>Budgeting</h2>
+    <p>A budget is a plan for your money — it tells your money where to go instead of wondering where it went. The 50/30/20 rule is one of the simplest frameworks to get started.</p>
+  </div>
+  <div class="content">
+    <div class="callout">
+      <p><strong>The 50/30/20 Rule</strong></p>
+      <p><strong>50% Needs</strong> — essentials like food, transport, your phone plan.<br>
+      <strong>30% Wants</strong> — entertainment, dining out, clothing, hobbies.<br>
+      <strong>20% Savings</strong> — money you set aside to grow and protect your future.</p>
+    </div>
+
+    <div class="widget">
+      <h3>Budget Calculator</h3>
+      <p class="sub">Enter your monthly income and adjust the sliders to split it across categories.</p>
+      <div class="fields" style="grid-template-columns:1fr;max-width:240px;">
+        <div class="field">
+          <label>Monthly Income ($)</label>
+          <input type="number" id="b-income" value="500" min="0" oninput="updateBudget()">
+        </div>
+      </div>
+      <div class="slider-list">
+        <div class="slider-row">
+          <label>🏠 Needs</label>
+          <input type="range" id="s-needs" min="0" max="100" value="50" oninput="syncB()">
+          <span class="pct-val" id="p-needs">50%</span>
+        </div>
+        <div class="slider-row">
+          <label>🎮 Wants</label>
+          <input type="range" id="s-wants" min="0" max="100" value="30" oninput="syncB()">
+          <span class="pct-val" id="p-wants">30%</span>
+        </div>
+        <div class="slider-row">
+          <label>💰 Savings</label>
+          <input type="range" id="s-savings" min="0" max="100" value="20" oninput="syncB()">
+          <span class="pct-val" id="p-savings">20%</span>
+        </div>
+      </div>
+      <div class="result-tiles">
+        <div class="rtile needs"><div class="rcat">Needs</div><div class="ramt" id="r-needs">$250</div><div class="rpct" id="rp-needs">50%</div></div>
+        <div class="rtile wants"><div class="rcat">Wants</div><div class="ramt" id="r-wants">$150</div><div class="rpct" id="rp-wants">30%</div></div>
+        <div class="rtile savings"><div class="rcat">Savings</div><div class="ramt" id="r-savings">$100</div><div class="rpct" id="rp-savings">20%</div></div>
+      </div>
+      <div class="warn" id="b-warn"></div>
+    </div>
+
+    <div class="sec-title">Needs vs. wants</div>
+    <div class="prose">
+      <p>The most important budgeting skill isn't maths — it's <strong>honest self-awareness</strong>. Before you spend, ask: is this something I truly need, or something I want?</p>
+      <p><strong>Needs</strong> are non-negotiables — food, transport to school or work, essential utilities. Without them, your daily life is seriously impacted.</p>
+      <p><strong>Wants</strong> are extras that make life enjoyable but are optional. There's nothing wrong with wants — the key is funding needs and savings first, then enjoying what's left.</p>
+      <p>Budgeting isn't about deprivation. It's about being <strong>intentional</strong> — so that when you do spend on wants, you're choosing to, not just drifting.</p>
+    </div>
+  </div>
+</div>
+
+<!-- COMPOUND INTEREST -->
+<div class="panel" id="panel-compound">
+  <div class="page-head">
+    <span class="tag">Module 2</span>
+    <h2>Compound Interest</h2>
+    <p>When your savings earn interest, that interest earns its own interest — creating a snowball effect that grows faster the longer it runs. Einstein reportedly called it the "eighth wonder of the world."</p>
+  </div>
+  <div class="content">
+    <div class="callout">
+      <p><strong>The formula:</strong> A = P × (1 + r/n)^(n×t) + future value of monthly contributions</p>
+      <p>You don't need to memorise this — the calculator below handles the maths. The key idea: <strong>time is your most valuable input.</strong></p>
+    </div>
+
+    <div class="widget">
+      <h3>Compound Interest Calculator</h3>
+      <p class="sub">Adjust the inputs to see how your savings grow over time.</p>
+      <div class="fields">
+        <div class="field"><label>Starting Amount ($)</label><input type="number" id="ci-p" value="500" min="0" oninput="updateCI()"></div>
+        <div class="field"><label>Monthly Contribution ($)</label><input type="number" id="ci-m" value="50" min="0" oninput="updateCI()"></div>
+        <div class="field"><label>Annual Rate (%)</label><input type="number" id="ci-r" value="5" min="0" max="100" step="0.1" oninput="updateCI()"></div>
+        <div class="field"><label>Years</label><input type="number" id="ci-t" value="10" min="1" max="50" oninput="updateCI()"></div>
+        <div class="field"><label>Compounding</label><select id="ci-n" onchange="updateCI()"><option value="12">Monthly</option><option value="4">Quarterly</option><option value="1">Annually</option></select></div>
+      </div>
+      <div class="ci-tiles">
+        <div class="ctile"><div class="clabel">Total Deposited</div><div class="cval" id="ci-dep">$6,500</div></div>
+        <div class="ctile"><div class="clabel">Interest Earned</div><div class="cval" id="ci-int">$2,394</div></div>
+        <div class="ctile big"><div class="clabel">Final Balance</div><div class="cval" id="ci-fin">$8,894</div></div>
+      </div>
+      <div class="chart">
+        <div class="bars" id="ci-chart"></div>
+        <div class="clegend">
+          <div class="cleg"><div class="ldot" style="background:#b2d8c4"></div> Deposited</div>
+          <div class="cleg"><div class="ldot" style="background:var(--green)"></div> Interest</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Why starting early matters so much</div>
+    <div class="prose">
+      <p>If Emma saves <strong>$100/month from age 16</strong> at 6% annual return, she'll have around <strong>$200,000 by age 65</strong>. If Jake starts the same habit at age 26 — just 10 years later — he'll have roughly <strong>$100,000</strong>. Same effort, half the outcome.</p>
+      <p>The difference is the <strong>time compound interest had to work</strong>. Those extra 10 years give interest time to compound on itself exponentially.</p>
+      <p>It works the other way too. Credit card debt at 20% interest grows the same way against you. Understanding this dynamic is just as important as knowing how to grow savings.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SAVINGS GOALS -->
+<div class="panel" id="panel-savings">
+  <div class="page-head">
+    <span class="tag">Module 3</span>
+    <h2>Savings Goals</h2>
+    <p>A savings goal turns a wish into a plan. Set a specific target, a deadline, and a monthly amount — giving your money a clear purpose.</p>
+  </div>
+  <div class="content">
+    <div class="callout">
+      <p><strong>The SMART Framework:</strong> Specific · Measurable · Achievable · Relevant · Time-bound</p>
+      <p>Example: "Save $800 for a laptop in 8 months" is a SMART goal. "Save more money" is not.</p>
+    </div>
+
+    <div class="widget">
+      <h3>Savings Goal Builder</h3>
+      <p class="sub">Enter your goal details to find out how much to save each month.</p>
+      <div class="fields">
+        <div class="field"><label>Goal Name</label><input type="text" id="g-name" placeholder="e.g. New laptop" oninput="updateGoal()"></div>
+        <div class="field"><label>Target Amount ($)</label><input type="number" id="g-target" value="800" min="0" oninput="updateGoal()"></div>
+        <div class="field"><label>Already Saved ($)</label><input type="number" id="g-saved" value="0" min="0" oninput="updateGoal()"></div>
+        <div class="field"><label>Months to Reach Goal</label><input type="number" id="g-months" value="8" min="1" oninput="updateGoal()"></div>
+      </div>
+      <div class="goal-out">
+        <div class="gomain" id="g-main">—</div>
+        <div class="godetail" id="g-detail"></div>
+        <div class="prog-wrap">
+          <div class="prog-label" id="g-prog-label"></div>
+          <div class="prog-outer"><div class="prog-inner" id="g-prog" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Three habits that actually work</div>
+    <div class="prose">
+      <h3>Pay yourself first</h3>
+      <p>When you get paid, set aside your savings amount <strong>immediately</strong> — before spending on anything else. This removes the temptation to spend first and save whatever's left.</p>
+      <h3>Build an emergency fund first</h3>
+      <p>Before saving for fun goals, aim to build a small cushion of <strong>$200–$500</strong>. This protects you from unexpected costs without needing to go into debt.</p>
+      <h3>Track your spending for one month</h3>
+      <p>Log every purchase for 30 days. Most people are surprised how much <strong>small, frequent purchases</strong> — coffees, snacks, subscriptions — add up over a month.</p>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="panel" id="panel-quiz">
+  <div class="page-head">
+    <span class="tag">Knowledge Check</span>
+    <h2>Quiz</h2>
+    <p>Six questions to test what you've learned. You'll get instant feedback and an explanation for every answer.</p>
+  </div>
+  <div class="content">
+    <div class="qwrap">
+      <div class="qprog-outer"><div class="qprog-inner" id="qprog" style="width:0%"></div></div>
+      <div id="qcards"></div>
+      <div class="qresult" id="qresult">
+        <div class="bigscore" id="qscore"></div>
+        <div class="scorelabel">correct answers</div>
+        <p id="qmsg"></p>
+        <button class="btn-restart" onclick="restartQuiz()">Try Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Financial Foundations for Beginners · Sai Bannur · 2026 ·
+  <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a> ·
+  For educational purposes only.
+</footer>
+
+<script>
+// ── NAV ──
+function go(id) {
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.toggle('active', b.dataset.p === id));
+  document.querySelectorAll('.mobile-menu button').forEach(b => b.classList.toggle('active', b.dataset.pm === id));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  document.getElementById('mmenu').classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.nav-links button').forEach(b => b.addEventListener('click', () => go(b.dataset.p)));
+document.querySelectorAll('.mobile-menu button').forEach(b => b.addEventListener('click', () => go(b.dataset.pm)));
+document.getElementById('hbg').addEventListener('click', () => document.getElementById('mmenu').classList.toggle('open'));
+
+// ── BUDGET ──
+function syncB() {
+  const n = +document.getElementById('s-needs').value;
+  const w = +document.getElementById('s-wants').value;
+  const s = +document.getElementById('s-savings').value;
+  document.getElementById('p-needs').textContent = n + '%';
+  document.getElementById('p-wants').textContent = w + '%';
+  document.getElementById('p-savings').textContent = s + '%';
+  const total = n + w + s, warn = document.getElementById('b-warn');
+  warn.style.display = total !== 100 ? 'block' : 'none';
+  warn.textContent = `⚠️ Total is ${total}% — adjust sliders to reach 100%.`;
+  updateBudget();
+}
+function updateBudget() {
+  const inc = +document.getElementById('b-income').value || 0;
+  const n = +document.getElementById('s-needs').value;
+  const w = +document.getElementById('s-wants').value;
+  const s = +document.getElementById('s-savings').value;
+  const fmt = v => '$' + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  document.getElementById('r-needs').textContent = fmt(inc * n / 100);
+  document.getElementById('r-wants').textContent = fmt(inc * w / 100);
+  document.getElementById('r-savings').textContent = fmt(inc * s / 100);
+  document.getElementById('rp-needs').textContent = n + '%';
+  document.getElementById('rp-wants').textContent = w + '%';
+  document.getElementById('rp-savings').textContent = s + '%';
+}
+updateBudget();
+
+// ── COMPOUND INTEREST ──
+function calcCI(P, m, r, n, t) {
+  const rn = r / n, nt = n * t;
+  let A = P * Math.pow(1 + rn, nt);
+  if (m > 0 && r > 0) { const mr = r / 12, mo = t * 12; A += m * ((Math.pow(1 + mr, mo) - 1) / mr); }
+  else A += m * t * 12;
+  return A;
+}
+function updateCI() {
+  const P = +document.getElementById('ci-p').value || 0;
+  const m = +document.getElementById('ci-m').value || 0;
+  const r = (+document.getElementById('ci-r').value || 0) / 100;
+  const t = +document.getElementById('ci-t').value || 1;
+  const n = +document.getElementById('ci-n').value || 12;
+  const dep = P + m * 12 * t, fin = calcCI(P, m, r, n, t), int = Math.max(0, fin - dep);
+  const fmt = v => '$' + Math.round(v).toLocaleString();
+  document.getElementById('ci-dep').textContent = fmt(dep);
+  document.getElementById('ci-int').textContent = fmt(int);
+  document.getElementById('ci-fin').textContent = fmt(fin);
+  const chart = document.getElementById('ci-chart'); chart.innerHTML = '';
+  const step = Math.max(1, Math.floor(t / 8)), pts = [];
+  for (let y = step; y <= t; y += step) pts.push(y);
+  if (pts[pts.length - 1] !== t) pts.push(t);
+  pts.forEach(y => {
+    const tot = calcCI(P, m, r, n, y), d2 = P + m * 12 * y, i2 = Math.max(0, tot - d2);
+    const dh = Math.round((d2 / fin) * 100), ih = Math.round((i2 / fin) * 100);
+    const col = document.createElement('div'); col.className = 'bcol';
+    col.innerHTML = `<div class="b-i" style="height:${ih}px"></div><div class="b-p" style="height:${dh}px"></div><span class="b-yr">Yr ${y}</span>`;
+    chart.appendChild(col);
+  });
+}
+updateCI();
+
+// ── SAVINGS GOAL ──
+function updateGoal() {
+  const name = document.getElementById('g-name').value.trim() || 'Your Goal';
+  const target = +document.getElementById('g-target').value || 0;
+  const saved = +document.getElementById('g-saved').value || 0;
+  const months = +document.getElementById('g-months').value || 1;
+  const remaining = Math.max(0, target - saved), perMonth = remaining / months;
+  const pct = target > 0 ? Math.min(100, (saved / target) * 100) : 0;
+  const fmt = v => '$' + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  document.getElementById('g-main').textContent = `"${name}" — ${fmt(target)} in ${months} month${months !== 1 ? 's' : ''}`;
+  document.getElementById('g-detail').textContent = `Save ${fmt(perMonth)}/month · ${fmt(saved)} saved so far · ${fmt(remaining)} to go.`;
+  document.getElementById('g-prog-label').textContent = `Progress: ${Math.round(pct)}%`;
+  document.getElementById('g-prog').style.width = pct + '%';
+}
+updateGoal();
+
+// ── QUIZ ──
+const QS = [
+  { q: "You earn $400/month. Using the 50/30/20 rule, how much goes to savings?", opts: ["$40", "$80", "$120", "$200"], ans: 1, fb: "Correct! 20% of $400 = $80. Consistently applied, that's $960 saved per year." },
+  { q: "What is compound interest?", opts: ["Interest only on your original deposit", "A monthly banking fee", "Interest earned on both your original deposit and on previously earned interest", "A fixed-payment loan"], ans: 2, fb: "Correct! Compound interest earns on your original amount AND on previously earned interest, creating a snowball effect over time." },
+  { q: "Emma saves $50/month from age 16. Jake saves $50/month from age 26. Both earn the same rate and stop at 65. Who has more?", opts: ["Jake — he's more disciplined", "Emma — she had more time for compound growth", "They end up equal", "Depends entirely on the rate"], ans: 1, fb: "Correct! Emma ends up with roughly twice as much. An extra decade of compound growth makes a dramatic difference." },
+  { q: "Which of the following is a 'need' in a budget?", opts: ["The latest video game", "A concert ticket", "Transport to get to school or work", "Brand-name sneakers"], ans: 2, fb: "Correct! Needs are essentials — food, transport, utilities. Wants are valuable but optional." },
+  { q: "You want a $600 item in 6 months. You've saved $150 already. How much do you need per month?", opts: ["$60", "$75", "$100", "$150"], ans: 1, fb: "Correct! ($600 − $150) ÷ 6 = $75/month. This is the SMART goals approach — specific and time-bound." },
+  { q: "Why build an emergency fund before other savings goals?", opts: ["Emergency funds earn the highest rates", "Banks require it", "It protects you from unexpected costs without going into debt", "They're tax-deductible"], ans: 2, fb: "Correct! An emergency fund is your safety net. Without one, unexpected expenses can force you into debt and undo all your progress." }
+];
+let curQ = 0, score = 0, answered = false;
+
+function renderQ() {
+  const cards = document.getElementById('qcards'); cards.innerHTML = '';
+  if (curQ >= QS.length) { showResult(); return; }
+  const q = QS[curQ];
+  document.getElementById('qprog').style.width = ((curQ / QS.length) * 100) + '%';
+  const card = document.createElement('div'); card.className = 'qcard';
+  card.innerHTML = `<div class="qnum">Question ${curQ + 1} of ${QS.length}</div><div class="qtext">${q.q}</div><div class="qopts">${q.opts.map((o, i) => `<button class="qopt" onclick="answerQ(${i})">${o}</button>`).join('')}</div><div class="qfb" id="qfb"></div><button class="qnext" id="qnext" onclick="nextQ()">${curQ + 1 < QS.length ? 'Next →' : 'See Results →'}</button>`;
+  cards.appendChild(card); answered = false;
+}
+function answerQ(idx) {
+  if (answered) return; answered = true;
+  const q = QS[curQ];
+  document.querySelectorAll('.qopt').forEach((b, i) => { b.disabled = true; if (i === q.ans) b.classList.add('correct'); else if (i === idx && idx !== q.ans) b.classList.add('incorrect'); });
+  const fb = document.getElementById('qfb');
+  if (idx === q.ans) { score++; fb.className = 'qfb correct'; fb.textContent = '✅ ' + q.fb; }
+  else { fb.className = 'qfb incorrect'; fb.textContent = '❌ Not quite. ' + q.fb; }
+  document.getElementById('qnext').style.display = 'inline-block';
+}
+function nextQ() { curQ++; renderQ(); }
+function showResult() {
+  document.getElementById('qcards').style.display = 'none';
+  document.getElementById('qresult').style.display = 'block';
+  document.getElementById('qprog').style.width = '100%';
+  document.getElementById('qscore').textContent = `${score}/${QS.length}`;
+  const pct = Math.round((score / QS.length) * 100);
+  document.getElementById('qmsg').textContent = pct === 100 ? "Perfect! You've nailed the fundamentals." : pct >= 66 ? `Good work! Review the modules for any questions you missed.` : `Keep going — revisit the modules and try again.`;
+}
+function restartQuiz() {
+  curQ = 0; score = 0; answered = false;
+  document.getElementById('qcards').style.display = 'block';
+  document.getElementById('qresult').style.display = 'none';
+  renderQ();
+}
+renderQ();
+</script>
+</body>
+</html>
